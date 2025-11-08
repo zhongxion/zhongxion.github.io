@@ -3,714 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生活点滴与代码分享</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        accent: '#8B5CF6',
-                        dark: '#1F2937',
-                        light: '#F3F4F6'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+    <title>ZX博客跳转页</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            font-family: "Microsoft YaHei", sans-serif;
+            color: #fff;
+            text-align: center;
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .text-shadow-lg {
-                text-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            background-color: #ffffff;
+            color: #1e90ff;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: #1e90ff;
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .note {
+            margin-top: 25px;
+            font-size: 0.9em;
+            color: #e0e0e0;
+        }
+
+        .ipv6 {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #dcdcdc;
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-custom">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fa fa-pencil-square-o text-primary text-2xl"></i>
-                    <span class="text-xl font-bold text-dark">生活与代码</span>
-                </a>
-                
-                <!-- 桌面导航 -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-primary font-medium transition-custom">首页</a>
-                    <a href="#blog" class="text-gray-700 hover:text-primary font-medium transition-custom">生活博客</a>
-                    <a href="#code" class="text-gray-700 hover:text-primary font-medium transition-custom">代码分享</a>
-                    <a href="#gallery" class="text-gray-700 hover:text-primary font-medium transition-custom">图片集锦</a>
-                    <a href="#community" class="text-gray-700 hover:text-primary font-medium transition-custom">交流区</a>
-                </nav>
-                
-                <!-- 移动端菜单按钮 -->
-                <button id="menu-toggle" class="md:hidden text-gray-700 hover:text-primary focus:outline-none">
-                    <i class="fa fa-bars text-xl"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
-            <div class="container mx-auto px-4 py-3 space-y-3">
-                <a href="#home" class="block text-gray-700 hover:text-primary font-medium py-2 transition-custom">首页</a>
-                <a href="#blog" class="block text-gray-700 hover:text-primary font-medium py-2 transition-custom">生活博客</a>
-                <a href="#code" class="block text-gray-700 hover:text-primary font-medium py-2 transition-custom">代码分享</a>
-                <a href="#gallery" class="block text-gray-700 hover:text-primary font-medium py-2 transition-custom">图片集锦</a>
-                <a href="#community" class="block text-gray-700 hover:text-primary font-medium py-2 transition-custom">交流区</a>
-            </div>
-        </div>
-    </header>
+<body>
+    <h1>ZX博客欢迎你的访问</h1>
 
-    <!-- 主页横幅 -->
-    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark leading-tight text-shadow-lg mb-4">
-                        记录生活的<span class="text-primary">点滴美好</span><br>
-                        分享代码的<span class="text-accent">无限可能</span>
-                    </h1>
-                    <p class="text-gray-600 text-lg md:text-xl mb-8 max-w-lg">
-                        这里是一个记录生活瞬间、分享编程心得的小天地，欢迎加入我们的交流社区。
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#blog" class="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-custom flex items-center">
-                            <i class="fa fa-book mr-2"></i> 浏览博客
-                        </a>
-                        <a href="#community" class="px-6 py-3 bg-white hover:bg-gray-50 text-primary border border-primary font-medium rounded-lg shadow-sm hover:shadow transition-custom flex items-center">
-                            <i class="fa fa-comments mr-2"></i> 加入交流
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 relative">
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-custom">
-                        <img src="E:\博客网站源文件\山水风景图.jpg" alt="山水风景图，远处是连绵的山峰，近处是平静的湖面" class="w-full h-auto object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    </div>
-                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg transform -rotate-3 hover:rotate-0 transition-custom hidden md:block">
-                        <p class="text-sm text-gray-600"><i class="fa fa-quote-left text-primary/50 mr-2"></i>生活就像一段代码，需要不断调试才能完美运行</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <a class="btn" href="http://[2409:8a50:5621:3130:69ff:786e:2199:9b29]:8888/" target="_blank">
+        点击跳转至 ZX 博客
+    </a>
 
-    <!-- 生活博客区 -->
-    <section id="blog" class="py-16 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">生活博客</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">记录生活中的每一个精彩瞬间，分享旅途见闻与日常感悟</p>
-                <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 博客卡片1 -->
-                <article class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="E:\博客网站源文件\奔跑.jpg" alt="一群小孩在公园里奔跑放风筝，阳光明媚，充满活力" class="w-full h-full object-cover transform group-hover:scale-105 transition-custom duration-500">
-                        <div class="absolute top-4 left-4 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
-                            童年回忆
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-custom">公园里的风筝与欢笑</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            周末的公园总是充满欢声笑语，看着孩子们奔跑着放飞风筝，仿佛自己也回到了无忧无虑的童年时光...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 text-sm"><i class="fa fa-calendar-o mr-1"></i> 2023-05-15</span>
-                            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                                阅读更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 博客卡片2 -->
-                <article class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="E:\博客网站源文件\小城风光.jpg" alt="宁静的农村景象，有低矮的房屋、绿色的田野和乡间小路" class="w-full h-full object-cover transform group-hover:scale-105 transition-custom duration-500">
-                        <div class="absolute top-4 left-4 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
-                            乡村生活
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-custom">小城故事多</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            远离城市的喧嚣，来到这座宁静的小城。清晨的薄雾、傍晚的炊烟，还有邻里间淳朴的问候，都让人感到温暖...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 text-sm"><i class="fa fa-calendar-o mr-1"></i> 2023-06-22</span>
-                            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                                阅读更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 博客卡片3 -->
-                <article class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="E:\博客网站源文件\休闲.jpg" alt="河边有很多老人在散步，旁边有一座玲珑宝塔，周围绿树成荫" class="w-full h-full object-cover transform group-hover:scale-105 transition-custom duration-500">
-                        <div class="absolute top-4 left-4 bg-accent text-white text-sm font-medium px-3 py-1 rounded-full">
-                            悠闲时光
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-custom">黄昏下的漫步</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            夕阳西下，老人们在河边悠闲地散步，玲珑宝塔在暮色中更显古朴。这样的时光，缓慢而美好...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 text-sm"><i class="fa fa-calendar-o mr-1"></i> 2023-07-08</span>
-                            <a href="#" class="text-primary font-medium hover:underline flex items-center">
-                                阅读更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            
-            <div class="text-center mt-10">
-                <a href="#" class="inline-flex items-center px-5 py-2.5 bg-white border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
-                    查看更多文章 <i class="fa fa-long-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+    <div class="note">
+        若网站失效，请发送任意邮件至：<br>
+        <a href="mailto:zhongxion666@gmail.com" style="color: #fff; text-decoration: underline;">
+            zhongxion666@gmail.com
+        </a><br>
+        获取最新访问 IP，以便及时更新跳转目标。
+    </div>
 
-    <!-- 代码分享区 -->
-    <section id="code" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">代码开源分享</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">分享实用的代码片段、项目经验和编程技巧</p>
-                <div class="w-20 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- 代码分享1 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-custom">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center mb-3">
-                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                                <i class="fa fa-html5 text-orange-500"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">响应式导航栏实现</h3>
-                                <p class="text-gray-500 text-sm">前端开发 · 2天前更新</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            一个简洁的响应式导航栏实现方案，包含移动端菜单和滚动效果，适用于各种现代网站。
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">HTML5</span>
-                            <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded">Tailwind CSS</span>
-                            <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">JavaScript</span>
-                        </div>
-                    </div>
-                    <div class="p-4 bg-gray-900 text-gray-300 font-mono text-sm overflow-x-auto">
-                        <pre><code>// 导航栏滚动效果
-window.addEventListener('scroll', function() {
-  const navbar = document.getElementById('navbar');
-  if (window.scrollY > 50) {
-    navbar.classList.add('py-2', 'shadow');
-    navbar.classList.remove('py-4');
-  } else {
-    navbar.classList.add('py-4');
-    navbar.classList.remove('py-2', 'shadow');
-  }
-});</code></pre>
-                    </div>
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center text-gray-500">
-                            <span class="flex items-center mr-4"><i class="fa fa-eye mr-1"></i> 342</span>
-                            <span class="flex items-center"><i class="fa fa-star-o mr-1"></i> 28</span>
-                        </div>
-                        <a href="#" class="text-accent hover:text-accent/80 font-medium flex items-center">
-                            查看完整代码 <i class="fa fa-github ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- 代码分享2 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-custom">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center mb-3">
-                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                <i class="fa fa-database text-green-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">本地存储数据管理工具</h3>
-                                <p class="text-gray-500 text-sm">JavaScript · 1周前更新</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            一个轻量级的本地存储数据管理工具，简化localStorage的使用，支持数据加密和过期时间设置。
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">JavaScript</span>
-                            <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">localStorage</span>
-                            <span class="px-2 py-1 bg-red-50 text-red-700 text-xs rounded">加密</span>
-                        </div>
-                    </div>
-                    <div class="p-4 bg-gray-900 text-gray-300 font-mono text-sm overflow-x-auto">
-                        <pre><code>// 本地存储工具类
-class StorageManager {
-  constructor(prefix = 'app_') {
-    this.prefix = prefix;
-  }
-  
-  // 保存数据
-  set(key, value, expiresIn = null) {
-    const item = {
-      value,
-      expires: expiresIn ? Date.now() + expiresIn * 1000 : null
-    };
-    localStorage.setItem(this.prefix + key, JSON.stringify(item));
-  }
-  
-  // 获取数据
-  get(key) {
-    const item = localStorage.getItem(this.prefix + key);
-    if (!item) return null;
-    
-    const data = JSON.parse(item);
-    // 检查是否过期
-    if (data.expires && Date.now() > data.expires) {
-      this.remove(key);
-      return null;
-    }
-    
-    return data.value;
-  }
-  
-  // 移除数据
-  remove(key) {
-    localStorage.removeItem(this.prefix + key);
-  }
-}</code></pre>
-                    </div>
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center text-gray-500">
-                            <span class="flex items-center mr-4"><i class="fa fa-eye mr-1"></i> 287</span>
-                            <span class="flex items-center"><i class="fa fa-star-o mr-1"></i> 42</span>
-                        </div>
-                        <a href="#" class="text-accent hover:text-accent/80 font-medium flex items-center">
-                            查看完整代码 <i class="fa fa-github ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-10">
-                <a href="#" class="inline-flex items-center px-5 py-2.5 bg-white border border-accent text-accent font-medium rounded-lg hover:bg-accent hover:text-white transition-custom">
-                    浏览更多代码 <i class="fa fa-code ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 图片集锦 -->
-    <section id="gallery" class="py-16 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">图片集锦</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">定格生活中的美好瞬间，分享旅途风景与日常点滴</p>
-                <div class="w-20 h-1 bg-secondary mx-auto mt-4 rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- 图片1 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-custom cursor-pointer h-64">
-                    <img src="E:\博客网站源文件\奔跑.jpg" alt="一群小孩在公园里奔跑放风筝，阳光明媚，充满活力" class="w-full h-full object-cover transform group-hover:scale-110 transition-custom duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-custom flex items-end">
-                        <div class="p-4 text-white">
-                            <h3 class="font-bold">公园里的欢乐时光</h3>
-                            <p class="text-sm text-gray-200">孩子们的笑声与飞翔的风筝</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 图片2 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-custom cursor-pointer h-64">
-                    <img src="E:\博客网站源文件\山水风景图.jpg" alt="山水风景图，远处是连绵的山峰，近处是平静的湖面" class="w-full h-full object-cover transform group-hover:scale-110 transition-custom duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-custom flex items-end">
-                        <div class="p-4 text-white">
-                            <h3 class="font-bold">壮丽山水</h3>
-                            <p class="text-sm text-gray-200">大自然的鬼斧神工</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 图片3 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-custom cursor-pointer h-64">
-                    <img src="E:\博客网站源文件\小城风光.jpg" alt="宁静的农村景象，有低矮的房屋、绿色的田野和乡间小路" class="w-full h-full object-cover transform group-hover:scale-110 transition-custom duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-custom flex items-end">
-                        <div class="p-4 text-white">
-                            <h3 class="font-bold">小城风光</h3>
-                            <p class="text-sm text-gray-200">宁静祥和的乡村生活</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 图片4 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-custom cursor-pointer h-64">
-                    <img src="E:\博客网站源文件\休闲.jpg" alt="河边有很多老人在散步，旁边有一座玲珑宝塔，周围绿树成荫" class="w-full h-full object-cover transform group-hover:scale-110 transition-custom duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-custom flex items-end">
-                        <div class="p-4 text-white">
-                            <h3 class="font-bold">悠闲时光</h3>
-                            <p class="text-sm text-gray-200">黄昏下的漫步与古塔</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 交流区 -->
-    <section id="community" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">交流区</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">分享你的想法，与其他用户交流互动</p>
-                <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- 发布帖子表单 -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <h3 class="text-xl font-bold mb-4">发布新帖子</h3>
-                        <form id="post-form" class="space-y-4">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">你的名字</label>
-                                <input type="text" id="name" name="name" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom"
-                                    placeholder="请输入你的名字">
-                            </div>
-                            <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700 mb-1">标题</label>
-                                <input type="text" id="title" name="title" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom"
-                                    placeholder="帖子标题">
-                            </div>
-                            <div>
-                                <label for="content" class="block text-sm font-medium text-gray-700 mb-1">内容</label>
-                                <textarea id="content" name="content" rows="4" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom"
-                                    placeholder="分享你的想法..."></textarea>
-                            </div>
-                            <button type="submit"
-                                class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-4 rounded-lg transition-custom flex items-center justify-center">
-                                <i class="fa fa-paper-plane mr-2"></i> 发布帖子
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                
-                <!-- 帖子列表 -->
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div class="p-6 border-b border-gray-100">
-                            <h3 class="text-xl font-bold mb-2">最新讨论</h3>
-                            <p class="text-gray-600 text-sm">查看大家的分享和讨论</p>
-                        </div>
-                        
-                        <div id="posts-container" class="divide-y divide-gray-100">
-                            <!-- 帖子1 -->
-                            <div class="p-6 hover:bg-gray-50 transition-custom">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                            <i class="fa fa-user text-gray-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold">李明</h4>
-                                            <p class="text-gray-500 text-sm">2小时前</p>
-                                        </div>
-                                    </div>
-                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">生活</span>
-                                </div>
-                                <h3 class="text-lg font-bold mb-2">推荐一个很棒的摄影地点</h3>
-                                <p class="text-gray-600 mb-4">
-                                    上周去了一个湖边公园，那里的日落非常美丽，特别适合拍照。有兴趣的朋友可以去看看，下午5点左右光线最佳...
-                                </p>
-                                <div class="flex items-center text-gray-500 text-sm">
-                                    <button class="flex items-center hover:text-primary transition-custom mr-4">
-                                        <i class="fa fa-comment-o mr-1"></i> 回复 (5)
-                                    </button>
-                                    <button class="flex items-center hover:text-primary transition-custom">
-                                        <i class="fa fa-heart-o mr-1"></i> 喜欢 (12)
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- 帖子2 -->
-                            <div class="p-6 hover:bg-gray-50 transition-custom">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                            <i class="fa fa-user text-gray-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold">张华</h4>
-                                            <p class="text-gray-500 text-sm">昨天</p>
-                                        </div>
-                                    </div>
-                                    <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">代码</span>
-                                </div>
-                                <h3 class="text-lg font-bold mb-2">关于前端框架的选择</h3>
-                                <p class="text-gray-600 mb-4">
-                                    最近在做一个新项目，纠结于用React还是Vue。大家有什么建议吗？主要考虑开发效率和学习曲线...
-                                </p>
-                                <div class="flex items-center text-gray-500 text-sm">
-                                    <button class="flex items-center hover:text-primary transition-custom mr-4">
-                                        <i class="fa fa-comment-o mr-1"></i> 回复 (23)
-                                    </button>
-                                    <button class="flex items-center hover:text-primary transition-custom">
-                                        <i class="fa fa-heart-o mr-1"></i> 喜欢 (37)
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- 帖子3 -->
-                            <div class="p-6 hover:bg-gray-50 transition-custom">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                            <i class="fa fa-user text-gray-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold">王芳</h4>
-                                            <p class="text-gray-500 text-sm">3天前</p>
-                                        </div>
-                                    </div>
-                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">旅行</span>
-                                </div>
-                                <h3 class="text-lg font-bold mb-2">乡村自驾游攻略</h3>
-                                <p class="text-gray-600 mb-4">
-                                    整理了一份乡村自驾游的攻略，包含路线规划、住宿推荐和必吃美食。适合周末短途出行，有需要的朋友可以参考...
-                                </p>
-                                <div class="flex items-center text-gray-500 text-sm">
-                                    <button class="flex items-center hover:text-primary transition-custom mr-4">
-                                        <i class="fa fa-comment-o mr-1"></i> 回复 (18)
-                                    </button>
-                                    <button class="flex items-center hover:text-primary transition-custom">
-                                        <i class="fa fa-heart-o mr-1"></i> 喜欢 (45)
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-4 border-t border-gray-100 text-center">
-                            <button class="text-primary hover:text-primary/80 font-medium">
-                                加载更多 <i class="fa fa-refresh ml-1"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fa fa-pencil-square-o text-primary mr-2"></i> 生活与代码
-                    </h3>
-                    <p class="text-gray-400 mb-4">
-                        记录生活点滴，分享代码乐趣，连接每一个热爱生活与技术的人。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-custom">
-                            <i class="fa fa-github"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-custom">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-custom">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">快速链接</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white transition-custom">首页</a></li>
-                        <li><a href="#blog" class="text-gray-400 hover:text-white transition-custom">生活博客</a></li>
-                        <li><a href="#code" class="text-gray-400 hover:text-white transition-custom">代码分享</a></li>
-                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition-custom">图片集锦</a></li>
-                        <li><a href="#community" class="text-gray-400 hover:text-white transition-custom">交流区</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">联系我们</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fa fa-envelope text-primary mt-1 mr-3"></i>
-                            <span class="text-gray-400">zhongxion666@gmail.com</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
-                            <span class="text-gray-400">分享生活的每一个角落</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 pt-8 text-center">
-                <p class="text-gray-500">网站发布页</p>
-                <p class="text-gray-500">发布人：钟嘉晨</p>
-                <p class="text-gray-500 mt-2">&copy; 2023 生活与代码博客. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 返回顶部按钮 -->
-    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-custom hover:bg-primary/90">
-        <i class="fa fa-arrow-up"></i>
-    </button>
-
-    <!-- JavaScript -->
-    <script>
-        // 移动端菜单切换
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', () => {
-            // 导航栏效果
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow');
-            }
-            
-            // 返回顶部按钮
-            if (window.scrollY > 300) {
-                backToTop.classList.remove('opacity-0', 'invisible');
-                backToTop.classList.add('opacity-100', 'visible');
-            } else {
-                backToTop.classList.add('opacity-0', 'invisible');
-                backToTop.classList.remove('opacity-100', 'visible');
-            }
-        });
-        
-        // 返回顶部功能
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    // 关闭移动端菜单（如果打开）
-                    mobileMenu.classList.add('hidden');
-                    
-                    // 滚动到目标位置
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // 帖子发布功能
-        const postForm = document.getElementById('post-form');
-        const postsContainer = document.getElementById('posts-container');
-        
-        postForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
-            
-            // 创建新帖子元素
-            const newPost = document.createElement('div');
-            newPost.className = 'p-6 hover:bg-gray-50 transition-custom';
-            newPost.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                            <i class="fa fa-user text-gray-500"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold">${name}</h4>
-                            <p class="text-gray-500 text-sm">刚刚</p>
-                        </div>
-                    </div>
-                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">讨论</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">${title}</h3>
-                <p class="text-gray-600 mb-4">
-                    ${content}
-                </p>
-                <div class="flex items-center text-gray-500 text-sm">
-                    <button class="flex items-center hover:text-primary transition-custom mr-4">
-                        <i class="fa fa-comment-o mr-1"></i> 回复 (0)
-                    </button>
-                    <button class="flex items-center hover:text-primary transition-custom">
-                        <i class="fa fa-heart-o mr-1"></i> 喜欢 (0)
-                    </button>
-                </div>
-            `;
-            
-            // 添加到帖子列表顶部
-            postsContainer.insertBefore(newPost, postsContainer.firstChild);
-            
-            // 重置表单
-            postForm.reset();
-            
-            // 显示成功提示
-            alert('帖子发布成功！');
-        });
-    </script>
+    <div class="ipv6">
+        本站使用 IPv6 公网地址，请使用 IPv6 网络或流量访问。<br>
+        海外地区或开启代理VPN连接至外国的 IPv4 单栈代理服务器的，无法访问。
+    </div>
 </body>
-
 </html>
