@@ -2,90 +2,331 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZX博客跳转页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>执墨开源仓库 🇨🇳 导航页</title>
+    <meta name="description" content="执墨网络的开源仓库导航页">
+    <meta name="description" content="官方tg频道:@zhimox">
+    <meta name="theme-color" content="#1a73e8">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet"
+          id="material-font-link"
+          href="https://cdn.jsdelivr.net/npm/material-symbols@latest/outlined/index.css"
+          media="print" onload="this.media='all'">
+
     <style>
-        body {
+        * {
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --primary-light: #e8f0fe;
+            --card: #ffffff;
+            --bg: #f1f3f4;
+            --text: #202124;
+            --subtext: #5f6368;
+            --border: #dadce0;
+            --radius: 16px;
+            --shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --shadow-hover: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #8ab4f8;
+                --primary-light: #1a3a5c;
+                --card: #202124;
+                --bg: #171717;
+                --text: #e8eaed;
+                --subtext: #9aa0a6;
+                --border: #3c4043;
+                --shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
+                --shadow-hover: 0 1px 3px 0 rgba(0,0,0,0.3), 0 4px 8px 3px rgba(0,0,0,0.15);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+            background: var(--bg);
+            color: var(--text);
+            padding: 32px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--subtext);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .time-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .time {
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+
+        .date {
+            font-size: 13px;
+            color: var(--subtext);
+            margin-top: 6px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 20px;
+            padding-left: 8px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.4;
+        }
+
+        .nav-list {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            gap: 12px;
+            margin-bottom: 48px;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
+        }
+
+        .nav-item {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            font-family: "Microsoft YaHei", sans-serif;
-            color: #fff;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .btn {
-            background-color: #ffffff;
-            color: #1e90ff;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1em;
+            gap: 16px;
+            box-shadow: var(--shadow);
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            will-change: transform;
+            outline: none;
         }
 
-        .btn:hover {
-            background-color: #1e90ff;
-            color: #fff;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        .nav-item:focus-visible {
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.4);
         }
 
-        .note {
-            margin-top: 25px;
-            font-size: 0.9em;
-            color: #e0e0e0;
+        .nav-item:hover {
+            background: #f8f9fa;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
         }
 
-        .ipv6 {
-            position: absolute;
-            bottom: 10px;
-            font-size: 0.8em;
-            color: #dcdcdc;
+        @media (prefers-color-scheme: dark) {
+            .nav-item:hover {
+                background: #2d2e30;
+            }
+        }
+
+        .nav-item:active {
+            transform: scale(0.99);
+            background: #f1f3f4;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .icon span {
+            font-size: 24px;
+            font-variation-settings: 'wght' 400;
+            font-family: 'Material Symbols Outlined', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .info .title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 2px;
+            letter-spacing: 0.2px;
+        }
+
+        .info .desc {
+            font-size: 12px;
+            color: var(--subtext);
+        }
+
+        .arrow {
+            color: var(--subtext);
+            transition: color 0.2s, transform 0.2s;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .nav-item:hover .arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--subtext);
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
         }
     </style>
 </head>
+
 <body>
-    <h1>ZX博客欢迎你的访问</h1>
-    <h3>本站作者是一名初二学生，有问题希望通过邮箱联系我。</h3>
+    <div class="container">
+        <div class="header">
+            <h1>执墨 导航页</h1>
+            <p>执墨网络的项目导航页</p>
+        </div>
 
-    <a class="btn" href="https://zhongxion.dpdns.org/" target="_blank">
-        点击跳转至 ZX 博客 <br>
-    </a>
+        <div class="time-box">
+            <div class="time" id="time">--:--</div>
+            <div class="date" id="date">----.--.--</div>
+        </div>
 
-    <div class="note">
-        网站版本：V1.0，可以发送询问邮件至：<br>
-        <a href="mailto:zhongxion666@gmail.com" style="color: #fff; text-decoration: underline;">
-            zhongxion666@gmail.com
-        </a><br>
-        也可以通过这个邮箱联系到我，有什么问题尽管问<br>
-        作者有时候海马体不在线，在2026年6月之前可以通过邮箱提醒我续费哦，万分感谢！<br>
+        <h2 class="section-title">项目列表 </h2>
+        <div class="nav-list" id="navList"></div>
+
+        <h3>执墨网络tg官方频道:@zhimox</h3>
+        <div class="footer">© 2026 执墨网络 导航页</div>
     </div>
 
-    <div class="cloudeflare">
-        最新版网页采用cloudflare的隧道服务，已近可以全球IPv4/IPv6访问了！<br>
-        注：会技术的别来搞破坏，很难搞的，而且还违法！<br>
-        
-    </div>
+    <script>
+        // 格式：{ icon: '图标名', title: '名称', desc: '描述', url: '链接' }
+        const navData = [
+            { icon: '🤠', title: '执墨博客', desc: '执墨欲书的个人社交博客', url: 'https://blog.zhimoo.top/' },
+            { icon: '🔍', title: '执墨百科', desc: '执墨网络的官方wiki，用于解答各种知识的帮助手册', url: 'https://wiki.zhimoo.top/' },
+            { icon: '🆓', title: '公益项目', desc: '执墨的各种公益项目，欲书(执墨网络首席架构师)亲自长期维护', url: 'https://zhimoo.top/free.html' },
+            { icon: '🐳', title: '付费项目', desc: '执墨的各种闭源付费项目，提供长期维护)', url: 'https://zhimoo.top/mony.html' },,
+        ];
+
+        const navList = document.getElementById('navList');
+        const fragment = document.createDocumentFragment();
+
+        navData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'nav-item';
+            div.dataset.url = item.url;
+            div.setAttribute('role', 'link');
+            div.setAttribute('tabindex', '0');
+            div.setAttribute('aria-label', `${item.title} - ${item.desc}`);
+            div.innerHTML = `
+                <div class="icon">
+                    <span class="material-symbols-outlined" aria-hidden="true">${item.icon}</span>
+                </div>
+                <div class="info">
+                    <div class="title">${item.title}</div>
+                    <div class="desc">${item.desc}</div>
+                </div>
+                <span class="material-symbols-outlined arrow" aria-hidden="true">chevron_right</span>
+            `;
+            fragment.appendChild(div);
+        });
+
+        navList.appendChild(fragment);
+
+        navList.addEventListener('click', (e) => {
+            const card = e.target.closest('.nav-item');
+            if (card && card.dataset.url) {
+                window.open(card.dataset.url, '_blank', 'noopener,noreferrer');
+            }
+        });
+
+        navList.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const card = e.target.closest('.nav-item');
+                if (card && card.dataset.url) {
+                    window.open(card.dataset.url, '_blank', 'noopener,noreferrer');
+                }
+            }
+        });
+
+        function updateTime() {
+            const d = new Date();
+            const time = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            const date = d.getFullYear() + '.' + (d.getMonth() + 1).toString().padStart(2, '0') + '.' + d.getDate().toString().padStart(2, '0');
+            document.getElementById('time').textContent = time;
+            document.getElementById('date').textContent = date;
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        (function() {
+            const fontLink = document.getElementById('material-font-link');
+            if (!fontLink) return;
+            const fallbackUrl = 'https://cdn.bootcdn.net/ajax/libs/material-design-icons/4.0.0/iconfont/material-icons.css';
+
+            function checkFont() {
+                if (document.fonts && document.fonts.check('16px "Material Symbols Outlined"')) return true;
+                const testEl = document.createElement('span');
+                testEl.style.fontFamily = '"Material Symbols Outlined"';
+                testEl.style.visibility = 'hidden';
+                testEl.textContent = 'face';
+                document.body.appendChild(testEl);
+                const width = testEl.offsetWidth;
+                document.body.removeChild(testEl);
+                return width > 10;
+            }
+
+            function tryFallback() {
+                if (!checkFont()) {
+                    fontLink.href = fallbackUrl;
+                    fontLink.media = 'all';
+                }
+            }
+
+            window.addEventListener('load', () => {
+                setTimeout(tryFallback, 3000);
+            });
+        })();
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
