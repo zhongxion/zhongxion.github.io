@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VluaceOS Desktop | 开源个人桌面操作系统</title>
+    <style>
+        :root {
+            --trans-nav: rgba(255,255,255,0.07);
+            --trans-card: rgba(255,255,255,0.06);
+            --trans-card-hover: rgba(255,255,255,0.11);
+            --trans-border: rgba(255,255,255,0.12);
+            --mask-dark: rgba(0,0,0,0.68);
+            --primary-blue: #3690f5;
+            --primary-blue-light: #4ca0ff;
+            --text-white: #ffffff;
+            --text-gray: #cccccc;
+            --text-light-gray: #999999;
+            --gap-base: 12px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        body {
+            min-height: 100vh;
+            background-image: url("https://file.zhimoo.top/desktop.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-white);
+        }
+        .global-mask {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--mask-dark);
+            padding: 0 32px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 32px;
+            margin-inline: -32px;
+            background: var(--trans-nav);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--trans-border);
+        }
+        .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-white);
+            text-decoration: none;
+        }
+        .nav-logo-img {
+            height: 30px;
+            width: auto;
+        }
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        .lang-switch {
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--trans-border);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .lang-switch:hover {
+            background: rgba(255,255,255,0.18);
+        }
+        .hero-wrap {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 70px 0;
+        }
+        .hero-wrap h1 {
+            font-size: 50px;
+            margin-bottom: 16px;
+        }
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 720px;
+            line-height: 1.7;
+            margin-bottom: 42px;
+        }
+        .btn-base {
+            display: inline-block;
+            padding: 13px 28px;
+            background-color: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.25s ease;
+        }
+        .btn-base:hover {
+            background-color: var(--primary-blue-light);
+        }
+        .card-download-btn {
+            padding: 11px 24px;
+        }
+        .download-container {
+            max-width: 1240px;
+            margin: 0 auto 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .section-title {
+            font-size: 28px;
+            padding-bottom: 12px;
+            margin-bottom: 34px;
+            border-bottom: 1px solid var(--trans-border);
+            width: 100%;
+        }
+        .distro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
+            gap: 26px;
+            width: 100%;
+        }
+        .distro-card {
+            background: var(--trans-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--trans-border);
+            padding: 30px;
+            transition: background 0.25s ease;
+        }
+        .distro-card:hover {
+            background: var(--trans-card-hover);
+        }
+        .card-tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 5px 11px;
+            background: rgba(54, 144, 245, 0.18);
+            color: var(--primary-blue);
+            margin-bottom: 18px;
+        }
+        .distro-card h3 {
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+        .card-desc {
+            color: var(--text-gray);
+            line-height: 1.65;
+            font-size: 15px;
+            margin-bottom: 26px;
+        }
+        .card-meta {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-light-gray);
+        }
+        footer {
+            max-width: 1240px;
+            margin: 110px auto 0;
+            padding: 40px 0;
+            border-top: 1px solid var(--trans-border);
+            color: var(--text-light-gray);
+            font-size: 14px;
+        }
+        .footer-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        .footer-contact a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            margin-right: 16px;
+        }
+        .footer-contact a:hover {
+            text-decoration: underline;
+        }
+        .lang-en { display: block; }
+        .lang-zh { display: none; }
+        body.zh .lang-en { display: none; }
+        body.zh .lang-zh { display: block; }
+        @media (max-width: 1080px) {
+            nav {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .nav-group {
+                flex-direction: column;
+                gap: var(--gap-base);
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                row-gap: var(--gap-base);
+            }
+            .hero-wrap h1 {
+                font-size: 34px;
+            }
+            .footer-wrap {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="global-mask">
+        <nav>
+            <a href="/" class="nav-logo">
+                <img src="https://file.zhimoo.top/vluaceoslogo.png" alt="VluaceOS Logo" class="nav-logo-img">
+                <span>VluaceOS</span>
+            </a>
+            <div class="nav-group">
+                <div class="nav-links">
+                    <a id="link-home" href="/">
+                        <span class="lang-en">Home</span>
+                        <span class="lang-zh">首页</span>
+                    </a>
+                    <a id="link-server" target="_blank">
+                        <span class="lang-en">Server</span>
+                        <span class="lang-zh">服务器版</span>
+                    </a>
+                    <a id="link-docs" target="_blank">
+                        <span class="lang-en">Documentation</span>
+                        <span class="lang-zh">开发文档</span>
+                    </a>
+                    <a id="link-wiki" target="_blank">
+                        <span class="lang-en">Wiki</span>
+                        <span class="lang-zh">知识库</span>
+                    </a>
+                    <a id="link-about" target="_blank">
+                        <span class="lang-en">About</span>
+                        <span class="lang-zh">关于</span>
+                    </a>
+                    <a id="link-thanks" target="_blank">
+                        <span class="lang-en">Thanks</span>
+                        <span class="lang-zh">系统鸣谢</span>
+                    </a>
+                    <a id="link-news" target="_blank">
+                        <span class="lang-en">News</span>
+                        <span class="lang-zh">新闻公告</span>
+                    </a>
+                    <a id="link-github" target="_blank">GitHub</a>
+                    <a id="link-author" target="_blank">
+                        <span class="lang-en">VluaceOS MainMan Web</span>
+                        <span class="lang-zh">作者官网</span>
+                    </a>
+                </div>
+                <button class="lang-switch" id="langBtn">
+                    <span class="lang-en">中文 / EN</span>
+                    <span class="lang-zh">English / 中文</span>
+                </button>
+            </div>
+        </nav>
+        <div class="hero-wrap">
+            <h1>
+                <span class="lang-en">VluaceOS Desktop</span>
+                <span class="lang-zh">VluaceOS 个人桌面操作系统</span>
+            </h1>
+            <p class="hero-desc">
+                <span class="lang-en">
+                    VluaceOS Desktop is an open-source lightweight desktop system independently developed in China. It features low memory occupation, concise desktop environment, daily office, media playback and entertainment built-in, suitable for personal home computers, old hardware revitalization and daily office use.
+                </span>
+                <span class="lang-zh">
+                    VluaceOS Desktop 是国产自研开源轻量化桌面系统，内存占用极低，桌面环境简洁干净，内置日常办公、影音娱乐全套工具，适合个人家用电脑、老旧硬件焕新、日常办公场景使用。
+                </span>
+            </p>
+            <a id="heroGlobalDownload" href="" class="btn-base" target="_blank">
+                <span class="lang-en">Download VluaceOS Desktop</span>
+                <span class="lang-zh">下载 VluaceOS 桌面系统镜像</span>
+            </a>
+        </div>
+        <div class="download-container">
+            <div class="section-title">
+                <span class="lang-en">Download Desktop System</span>
+                <span class="lang-zh">桌面系统下载</span>
+            </div>
+            <div class="distro-grid">
+
+                <div class="distro-card">
+                    <h3>VluaceOS Desktop 1</h3>
+                    <span class="card-tag">
+                        <span class="lang-en">Official Stable Desktop</span>
+                        <span class="lang-zh">桌面稳定正式版</span>
+                    </span>
+                    <p class="card-desc">
+                        <span class="lang-en">Stable desktop release for daily personal office and home use. Free and open source x86_64 image, with one month official security maintenance provided by Zhimo Network Studio.</span>
+                        <span class="lang-zh">面向个人日常办公、家用，游戏场景的稳定桌面发行版，完全免费开源，提供x86_64通用镜像，执墨网络工作室提供为期一个月官方安全维护。</span>
+                    </p>
+                    <a href="" class="btn-base card-download-btn" id="stableDownloadBtn" target="_blank">
+                        <span class="lang-en">Download Img</span>
+                        <span class="lang-zh">下载镜像</span>
+                    </a>
+                    <div class="card-meta">
+                        <span class="lang-en">File info: 3.9GB  Issued time:26.7</span>
+                        <span class="lang-zh">文件信息：3.9GB 发布时间：26.7</span>
+                    </div>
+                </div>
+				
+                <div class="distro-card">
+                    <h3>VluaceOS Desktop E 26.7</h3>
+                    <span class="card-tag">
+                        <span class="lang-en">Rolling Update Desktop</span>
+                        <span class="lang-zh">滚动更新版</span>
+                    </span>
+                    <p class="card-desc">
+                        <span class="lang-en">Continuous rolling desktop branch, always equipped with latest desktop environment, graphics drivers, software applications and kernel, real-time security patches and feature iteration.</span>
+                        <span class="lang-zh">持续迭代桌面滚动分支，搭载最新桌面环境、显卡驱动、应用软件与内核，音频优化，实时同步安全补丁与新功能迭代。</span>
+                    </p>
+                    <a href="" class="btn-base card-download-btn" id="rollingDownloadBtn" target="_blank">
+                        <span class="lang-en">Download ISO</span>
+                        <span class="lang-zh">下载镜像</span>
+                    </a>
+                    <div class="card-meta">
+                        <span class="lang-en">File info: 3.9GB  Issued time:26.7</span>
+                        <span class="lang-zh">文件信息：3.9GB 发布时间：26.7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-wrap">
+                <div class="footer-copyright">
+                    <span class="lang-en">© 2026 Vluace OS Project | Enterprise desktop operating system | China</span>
+                    <span class="lang-zh">© 2026 VluaceOS 开源项目 | 企业级桌面操作系统 | China</span>
+                </div>
+                <div class="footer-contact">
+                    <span class="lang-en">Contact: </span>
+                    <span class="lang-zh">联系我们：</span>
+                    <a href="mailto:vluace@zhimoo.top">Email</a>
+                    <a href="https://github.com/zhongxion/VluaceOS-Linux" target="_blank">GitHub</a>
+                    <a href="https://zhimoo.top/" target="_blank">Author Site</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        const NAV_LINKS = {
+            homeUrl: "/",
+            serverUrl: "https://github.com/zhongxion/VluaceOS-Linux/releases/download/v1.0-final-archive/vluace-installer.iso",
+            docsUrl: "https://wiki.zhimoo.top/",
+            wikiUrl: "https://wiki.zhimoo.top/",
+            aboutUrl: "https://github.com/zhongxion/VluaceOS-Linux",
+            thanksUrl: "#",
+            newsUrl: "https://blog.zhimoo.top/",
+            githubUrl: "https://github.com/zhongxion/VluaceOS-Linux",
+            authorWebUrl: "https://zhimoo.top/"
+        };
+        const ARCHIVE_URL = "https://github.com/zhongxion/VluaceOS-Linux";
+        const STABLE_IMG_URL = "https://github.com/zhongxion/VluaceOS-Linux/releases/download/v1.0-final-archive/vluace-installer.iso";
+        const ROLLING_ISO_URL = "https://github.com/zhongxion/VluaceOS-Linux/releases/download/v1.0-final-archive/vluace-installer.iso";
+
+        Object.keys(NAV_LINKS).forEach(key => {
+            const linkId = key.replace("Url", "");
+            const el = document.getElementById(`link-${linkId}`);
+            if (el) el.href = NAV_LINKS[key];
+        });
+
+        document.getElementById("heroGlobalDownload").href = ARCHIVE_URL;
+        document.getElementById("stableDownloadBtn").href = STABLE_IMG_URL;
+        document.getElementById("rollingDownloadBtn").href = ROLLING_ISO_URL;
+
+        const langBtn = document.getElementById("langBtn");
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang.startsWith("zh")) document.body.classList.add("zh");
+        langBtn.addEventListener("click", () => document.body.classList.toggle("zh"));
+    </script>
+</body>
+</html>
