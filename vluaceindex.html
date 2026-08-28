@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VluaceOS</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-image: url("https://file.zhimoo.top/bz.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #e4e7ec;
+}
+.page-mask {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.top-nav {
+  width: 100%;
+  background: rgba(22, 30, 45, 0.86);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+.nav-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+}
+.logo-text img {
+  height: 26px;
+}
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.nav-item {
+  color: #c9cdd4;
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+.nav-item:hover {
+  color: #82bfff;
+}
+
+.product-dropdown {
+  position: relative;
+}
+.drop-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.drop-trigger::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid #b0b8c4;
+  border-bottom: 1.5px solid #b0b8c4;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
+}
+.product-dropdown:hover .drop-trigger::after {
+  transform: rotate(225deg);
+  border-color: #82bfff;
+}
+.drop-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  min-width: 160px;
+  background: rgba(16, 22, 33, 0.95);
+  border: 1px solid rgba(255,255,255,0.11);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: all 0.18s ease;
+}
+.product-dropdown:hover .drop-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.drop-link {
+  display: block;
+  padding: 11px 16px;
+  color: #c9cdd4;
+  text-decoration: none;
+  font-size: 14px;
+}
+.drop-link:hover {
+  background: rgba(60, 140, 240, 0.12);
+  color: #82bfff;
+}
+
+.banner-bar {
+  width: 100%;
+  height: 88px;
+  background: rgba(20, 38, 58, 0.68);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner-logo {
+  height: 58px;
+}
+
+.main-container {
+  max-width: 1320px;
+  margin: 44px auto 0;
+  padding: 36px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px;
+  background: rgba(22, 30, 45, 0.52);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+}
+.block-title {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 500;
+}
+.block-desc {
+  text-align: center;
+  font-size: 18px;
+  color: #b0b8c4;
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+
+.carousel-box {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(14, 20, 30, 0.55);
+}
+.car-track {
+  display: flex;
+  transition: transform 0.35s ease;
+}
+.car-item {
+  min-width: 100%;
+}
+.car-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+.car-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.car-btn.left { left: 10px; }
+.car-btn.right { right: 10px; }
+.car-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 14px;
+}
+.dot {
+  width: 11px;
+  height: 11px;
+  background: #606876;
+  cursor: pointer;
+}
+.dot.active {
+  background: #69a8ff;
+}
+
+.system-logo {
+  display: block;
+  max-width: 300px;
+  margin: 0 auto 22px;
+}
+.download-parent {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+.download-main-btn {
+  padding: 13px 46px;
+  border: none;
+  background: #3388ee;
+  color: #0f1724;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+.download-main-btn:hover {
+  background: #499aff;
+}
+.download-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 7px;
+  background: rgba(16, 22, 33, 0.95);
+  border: 1px solid rgba(255,255,255,0.11);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: all 0.18s ease;
+}
+.download-parent:hover .download-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.down-option {
+  display: block;
+  padding: 12px;
+  text-align: center;
+  color: #82bfff;
+  text-decoration: none;
+  font-size: 15px;
+}
+.down-option:hover {
+  background: rgba(60, 140, 240, 0.12);
+}
+.other-link {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  color: #a0a8b8;
+  font-size: 14px;
+  text-decoration: none;
+}
+.other-link:hover {
+  color: #82bfff;
+}
+
+.link-card {
+  margin-top: 28px;
+}
+.link-a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(14, 20, 30, 0.55);
+  text-decoration: none;
+  transition: border-color 0.18s ease;
+}
+.link-a:hover {
+  border-color: rgba(100, 170, 255, 0.22);
+}
+.link-icon {
+  width: 44px;
+  height: 44px;
+  color: #69a8ff;
+  flex-shrink: 0;
+}
+.link-text h4 {
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.link-text p {
+  font-size: 14px;
+  color: #a0a8b8;
+  line-height: 1.5;
+}
+
+.about-block {
+  max-width: 1320px;
+  margin: 64px auto 0;
+  padding: 40px 32px;
+  background: rgba(22, 30, 45, 0.52);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+}
+.about-block h2 {
+  text-align: center;
+  font-size: 26px;
+  color: #fff;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+.about-text {
+  max-width: 860px;
+  margin: 0 auto;
+  color: #b0b8c4;
+  line-height: 1.75;
+  font-size: 15px;
+}
+.about-text p + p {
+  margin-top: 16px;
+}
+.about-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 32px;
+}
+.about-links-row a {
+  color: #69a8ff;
+  text-decoration: none;
+  font-size: 15px;
+}
+.about-links-row a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1020px) {
+  .nav-wrap {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+  }
+  .main-container {
+    grid-template-columns: 1fr;
+  }
+  .car-item img {
+    height: 320px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page-mask">
+  <div class="top-nav">
+    <div class="nav-wrap">
+      <a href="/" class="logo-text">
+        <img src="https://file.zhimoo.top/vluaceoslogo.png" alt="VluaceOS">
+        VluaceOS
+      </a>
+      <div class="nav-menu">
+        <a href="/" class="nav-item">首页</a>
+        <div class="product-dropdown">
+          <span class="nav-item drop-trigger">产品</span>
+          <div class="drop-panel">
+            <a href="https://vluace.zhimoo.top/server.html" class="drop-link">服务器版</a>
+            <a href="https://vluace.zhimoo.top/desktop.html" class="drop-link">桌面版</a>
+          </div>
+        </div>
+        <a href="#" class="nav-item">关于</a>
+        <a href="https://github.com/zhongxion/VluaceOS-Linux/" target="_blank" class="nav-item">GitHub</a>
+        <a href="https://vluace.zhimoo.top/server.html" class="nav-item">获取</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner-bar">
+    <img src="https://file.zhimoo.top/henvluacelogo.png" class="banner-logo" alt="VluaceOS">
+  </div>
+
+  <div class="main-container">
+    <div class="left-col">
+      <h2 class="block-title">专为政企打造</h2>
+      <p class="block-desc">VluaceOS 由执墨网络工作室维护的企业级操作系统</p>
+
+      <div class="carousel-box">
+        <button class="car-btn left">&lt;</button>
+        <div class="car-track" id="carouselTrack">
+          <div class="car-item"><img src="https://file.zhimoo.top/vluaceoslogo.png" alt=""></div>
+          <div class="car-item"><img src="https://file.zhimoo.top/vluaceoslogo.png" alt=""></div>
+          <div class="car-item"><img src="https://file.zhimoo.top/vluaceoslogo.png" alt=""></div>
+          <div class="car-item"><img src="https://file.zhimoo.top/vluaceoslogo.pnghttps://file.zhimoo.top/vluaceoslogo.png" alt=""></div>
+          <div class="car-item"><img src="https://file.zhimoo.top/vluaceoslogo.png" alt=""></div>
+        </div>
+        <button class="car-btn right">&gt;</button>
+      </div>
+      <div class="car-dots" id="dotWrap"></div>
+
+      <div class="link-card">
+        <a href="#" class="link-a">
+          <svg class="link-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M17 20v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 20v-2a4 4 0 0 0-3-3.8"></path>
+            <path d="M16 3.1a4 4 0 0 1 0 7.8"></path>
+          </svg>
+          <div class="link-text">
+            <h4>参与者们</h4>
+            <p>项目维护者与社区贡献者介绍</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <h2 class="block-title">操作系统</h2>
+      <p class="block-desc">轻量稳定、企业化的 VluaceOS 服务器/桌面系统</p>
+
+      <img src="https://file.zhimoo.top/vluaceoslogo.png" class="system-logo" alt="VluaceOS">
+
+      <div class="download-parent">
+        <button class="download-main-btn">下载 VluaceOS</button>
+        <div class="download-panel">
+          <a href="https://download-vluace.zhimoo.top/os/v1/img/vluace-rootfs.img" class="down-option">服务器版</a>
+          <a href="https://download-vluace.zhimoo.top/os/v1/desktop/lanwei.sq" class="down-option">桌面版</a>
+        </div>
+      </div>
+      <a href="https://download-vluace.zhimoo.top/os/" class="other-link">其他下载渠道（系统选择页面）</a>
+
+      <div class="link-card">
+	    <!-- 这个地方为什么选择页面链接，记住，不要改错了 -->
+        <a href="#" class="link-a">
+          <svg class="link-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4"></path>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <div class="link-text">
+            <h4>为什么选择 VluaceOS</h4>
+            <p>系统优势、企业化，轻量化特性与适用场景说明</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-block">
+    <h2>关于 VluaceOS</h2>
+    <div class="about-text">
+      <p>VluaceOS 是基于Void Linux自研的开源操作系统，分为服务器版与桌面版两个分支，主打低内存占用、无冗余后台进程，面向政企运维、个人办公、老旧硬件复用场景开发。</p>
+      <p>项目完全开放源码，由执墨网络工作室持续迭代维护，任何人都可以提交代码、反馈问题、参与文档完善，所有系统镜像免费获取。</p>
+    </div>
+    <div class="about-links-row">
+      <a href="GitHub仓库地址" target="_blank">GitHub 仓库</a>
+      <a href="文档页面链接">官方文档</a>
+      <a href="社区讨论链接">社区论坛</a>
+      <a href="联系邮箱链接">联系我们</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const track = document.getElementById('carouselTrack');
+const dotWrap = document.getElementById('dotWrap');
+const leftBtn = document.querySelector('.car-btn.left');
+const rightBtn = document.querySelector('.car-btn.right');
+const slideNum = track.children.length;
+let cur = 0;
+
+for(let i=0;i<slideNum;i++){
+  const dot = document.createElement('span');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.dataset.num = i;
+  dot.onclick = () => switchSlide(i);
+  dotWrap.appendChild(dot);
+}
+
+function switchSlide(i){
+  cur = i;
+  track.style.transform = `translateX(${-cur * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d,idx)=>{
+    d.classList.toggle('active', idx === cur);
+  })
+}
+leftBtn.onclick = () => switchSlide((cur - 1 + slideNum) % slideNum);
+rightBtn.onclick = () => switchSlide((cur + 1) % slideNum);
+setInterval(()=>switchSlide((cur + 1) % slideNum),6000);
+</script>
+</body>
+</html>
