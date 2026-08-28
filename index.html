@@ -1,587 +1,333 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>tnabxy | Modern Edge Gateway</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>执墨开源仓库 🇨🇳 导航页</title>
+    <meta name="description" content="执墨网络的开源仓库导航页">
+    <meta name="description" content="官方tg频道:@zhimox">
+    <meta name="theme-color" content="#1a73e8">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet"
+          id="material-font-link"
+          href="https://cdn.jsdelivr.net/npm/material-symbols@latest/outlined/index.css"
+          media="print" onload="this.media='all'">
+
     <style>
-        :root {
-            --bg-main: #ffffff;
-            --bg-card: #f8fafc;
-            --bg-hover: #f0f4f9;
-            --border-line: #e5e7eb;
-            --primary: #00C48C;
-            --secondary: #2005F0;
-            --accent: #4F46E5;
-            --text-main: #111827;
-            --text-normal: #374151;
-            --text-hint: #6B7280;
-            --trans-fast: 120ms ease;
-            --trans-normal: 220ms ease;
-            --trans-slow: 350ms cubic-bezier(0.2, 0, 0.2, 1);
-        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: PingFang SC, Microsoft YaHei, system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --primary-light: #e8f0fe;
+            --card: #ffffff;
+            --bg: #f1f3f4;
+            --text: #202124;
+            --subtext: #5f6368;
+            --border: #dadce0;
+            --radius: 16px;
+            --shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --shadow-hover: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #8ab4f8;
+                --primary-light: #1a3a5c;
+                --card: #202124;
+                --bg: #171717;
+                --text: #e8eaed;
+                --subtext: #9aa0a6;
+                --border: #3c4043;
+                --shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
+                --shadow-hover: 0 1px 3px 0 rgba(0,0,0,0.3), 0 4px 8px 3px rgba(0,0,0,0.15);
+            }
         }
 
         body {
-            background: var(--bg-main);
-            color: var(--text-normal);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-        }
-        .main-wrap {
-            flex: 1;
-            padding: 48px 64px;
-            min-height: 100vh;
-        }
-
-        .sidebar-wrap {
-            width: 380px;
-            min-height: 100vh;
-            flex-shrink: 0;
-            background: linear-gradient(160deg, rgba(0, 196, 140, 0.08), rgba(32, 5, 240, 0.06));
-            background-image: url("https://images.unsplash.com/photo-1558494941-ef6481153fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80");
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: soft-light;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .sidebar-inner {
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.92);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+            background: var(--bg);
+            color: var(--text);
             padding: 32px 20px;
-            border-radius: 16px;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            gap: 36px;
-        }
-        @media (max-width: 1024px) {
-            body {
-                flex-direction: column;
-            }
-            .main-wrap {
-                padding-top: 80px;
-                padding-left: 24px;
-                padding-right: 24px;
-            }
-            .sidebar-wrap {
-                position: fixed;
-                top: 0;
-                right: 0;
-                width: 340px;
-                height: 100vh;
-                transform: translateX(100%);
-                transition: var(--trans-slow);
-                z-index: 998;
-            }
-            .sidebar-wrap.active {
-                transform: translateX(0);
-            }
-            .hamburger {
-                display: flex;
-            }
-            .mask {
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 997;
-                opacity: 0;
-                pointer-events: none;
-                transition: var(--trans-normal);
-            }
-            .mask.active {
-                opacity: 1;
-                pointer-events: all;
-            }
-        }
-        .hamburger {
-            display: none;
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            z-index: 999;
-            width: 42px;
-            height: 42px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: var(--trans-fast);
-        }
-        .hamburger:hover {
-            border-color: var(--primary);
-        }
-        .hamburger span {
-            display: block;
-            width: 22px;
-            height: 2px;
-            background: var(--text-main);
-            margin: 4px 0;
-            transition: var(--trans-normal);
-        }
-        .sidebar-logo-block {
-            text-align: center;
-        }
-        .logo-img {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 12px;
-            object-fit: contain;
-            display: block;
-        }
-        .logo-text {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 1px;
-            margin-top: 12px;
-        }
-        .logo-sub {
-            font-size: 13px;
-            color: var(--text-hint);
-            margin-top: 4px;
         }
 
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .nav-item {
-            padding: 12px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--trans-fast);
-            text-decoration: none;
-            color: var(--text-normal);
-            font-size: 15px;
-            text-align: center;
-        }
-        .nav-item:hover {
-            background: rgba(0, 196, 140, 0.12);
-            color: var(--primary);
-        }
-        .nav-item.active {
-            background: rgba(0, 196, 140, 0.16);
-            color: var(--primary);
-            font-weight: 500;
-            border-left: 3px solid var(--primary);
-        }
-        .section {
-            margin-bottom: 90px;
-        }
-        .section-divider {
+        .container {
             width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-line), transparent);
-            margin: 44px 0;
+            max-width: 600px;
         }
 
-        .title-lg {
-            font-size: 44px;
-            font-weight: 700;
-            color: var(--text-main);
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--subtext);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .time-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .time {
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--text);
             line-height: 1.2;
-            margin-bottom: 18px;
-        }
-        .title-md {
-            font-size: 30px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 14px;
-        }
-        .title-sm {
-            font-size: 21px;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
-        .desc {
-            font-size: 17px;
-            line-height: 1.75;
-            color: var(--text-normal);
-            max-width: 950px;
-            margin-bottom: 26px;
-        }
-
-        .highlight {
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .tag {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 99px;
+        .date {
             font-size: 13px;
-            margin-right: 10px;
-        }
-        .tag-green {
-            background: rgba(0, 196, 140, 0.12);
-            color: var(--primary);
-            border: 1px solid rgba(0, 196, 140, 0.2);
-        }
-        .tag-blue {
-            background: rgba(32, 5, 255, 0.12);
-            color: var(--secondary);
-        }
-        .tag-purple {
-            background: rgba(79, 70, 229, 0.12);
-            color: var(--accent);
-        }
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-            gap: 22px;
-            margin-top: 36px;
+            color: var(--subtext);
+            margin-top: 6px;
         }
 
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 12px;
-            padding: 20px 24px;
-            transition: var(--trans-normal);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 28px rgba(0, 196, 140, 0.09);
-        }
-        .card p {
-            font-size: 15px;
-            color: var(--text-hint);
-            margin-top: 10px;
-            line-height: 1.65;
-        }
-        .card h3 {
-            font-size: 21px;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 13px 30px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
+        .section-title {
             font-size: 16px;
             font-weight: 500;
-            transition: var(--trans-fast);
-            text-decoration: none;
+            color: var(--text);
+            margin-bottom: 20px;
+            padding-left: 8px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.4;
         }
-        .btn-primary {
-            background: var(--primary);
-            color: #ffffff;
+
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 48px;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
         }
-        .btn-primary:hover {
-            filter: brightness(1.12);
+
+        .nav-item {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            will-change: transform;
+            outline: none;
+        }
+
+        .nav-item:focus-visible {
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.4);
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+            box-shadow: var(--shadow-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 196, 140, 0.25);
         }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--primary);
+
+        @media (prefers-color-scheme: dark) {
+            .nav-item:hover {
+                background: #2d2e30;
+            }
+        }
+
+        .nav-item:active {
+            transform: scale(0.99);
+            background: #f1f3f4;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--primary);
-            margin-left: 14px;
+            flex-shrink: 0;
         }
-        .btn-outline:hover {
-            background: rgba(0, 196, 140, 0.08);
+
+        .icon span {
+            font-size: 24px;
+            font-variation-settings: 'wght' 400;
+            font-family: 'Material Symbols Outlined', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
         }
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 28px;
+
+        .info {
+            flex: 1;
         }
-        .compare-table th,
-        .compare-table td {
-            border: 1px solid var(--border-line);
-            padding: 16px 18px;
-            text-align: left;
+
+        .info .title {
             font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 2px;
+            letter-spacing: 0.2px;
         }
-        .compare-table th {
-            background: var(--bg-card);
-            color: var(--text-main);
+
+        .info .desc {
+            font-size: 12px;
+            color: var(--subtext);
         }
-        .compare-table tr:nth-child(even) {
-            background: rgba(248, 250, 252, 0.6);
+
+        .arrow {
+            color: var(--subtext);
+            transition: color 0.2s, transform 0.2s;
+            flex-shrink: 0;
+            font-size: 20px;
         }
-        .check {
+
+        .nav-item:hover .arrow {
             color: var(--primary);
-            font-weight: 600;
+            transform: translateX(4px);
         }
-        .cross {
-            color: #ef4444;
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: var(--trans-slow);
-        }
-        .fade-in.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .footer-note {
-            margin-top: 130px;
-            opacity: 0.75;
+
+        .footer {
             text-align: center;
-        }
-        .footer-note a {
-            color: var(--primary);
-            text-decoration: none;
+            font-size: 12px;
+            color: var(--subtext);
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
         }
     </style>
 </head>
+
 <body>
-    <div class="hamburger" id="menuBtn" aria-label="切换导航菜单" role="button" tabindex="0">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="container">
+        <div class="header">
+            <h1>执墨 导航页</h1>
+            <p>执墨网络的项目导航页</p>
+        </div>
+
+        <div class="time-box">
+            <div class="time" id="time">--:--</div>
+            <div class="date" id="date">----.--.--</div>
+        </div>
+
+        <h2 class="section-title">项目列表 </h2>
+        <div class="nav-list" id="navList"></div>
+
+        <h3>执墨网络tg官方频道:@zhimox</h3>
+        <div class="footer">© 2026 执墨网络 导航页</div>
     </div>
-    <div class="mask" id="mask" aria-hidden="true"></div>
-    <main class="main-wrap">
-        <section id="home" class="section fade-in">
-            <h1 class="title-lg">tnabxy — All‑in‑one Modern Edge Gateway</h1>
-            <p class="desc">
-                Single 11MB binary, all core functions built‑in. TOML configuration, native PHP &amp; JS runtime, built‑in ACME auto HTTPS, LRU cache, MySQL read‑write split proxy, visual WebUI management, extensible plugin system for developers. No scattered third‑party modules required, deploy all websites with one single file.
-                <br /><br />
-                <span class="highlight">tnabxy integrates web service, script interpreter, SSL certificate management, database proxy and visual control panel in one lightweight binary, eliminating complicated environment deployment work.</span>
-            </p>
-            <div>
-                <a href="" class="btn btn-primary">Download Binary</a>
-                <a href="https://wiki.zhimoo.top/tnabxy-webserver/yong-hu-shou-ce-user-manual" class="btn btn-outline">User Manual</a>
-            </div>
-            <div class="section-divider"></div>
-            <div>
-                <span class="tag tag-green">Built‑in PHP/JS Runtime</span>
-                <span class="tag tag-blue">Visual WebUI Dashboard</span>
-                <span class="tag tag-purple">Open Plugin Ecosystem</span>
-                <span class="tag tag-green">All‑in‑one Single Binary</span>
-            </div>
-        </section>
-        <section class="section fade-in">
-            <h2 class="title-md">Feature Comparison With Traditional Web Servers</h2>
-            <p class="desc">Compare deployment complexity, native feature support and secondary development difficulty among mainstream web service solutions</p>
-            <table class="compare-table">
-                <thead>
-                    <tr>
-                        <th>Feature Item</th>
-                        <th>tnabxy</th>
-                        <th>Nginx</th>
-                        <th>Apache</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Configuration Format</td><td class="check">Human‑readable TOML</td><td class="cross">Custom Difficult DSL</td><td class="cross">Redundant XML Style</td></tr>
-                    <tr><td>Native PHP &amp; JS Support</td><td class="check">Dual Runtime Built‑in</td><td class="cross">Manual FastCGI Config</td><td class="cross">mod_php extra config</td></tr>
-                    <tr><td>JS / Node Proxy</td><td class="check">Two Modes Built‑in</td><td class="cross">Extra proxy_pass write</td><td class="cross">Need Module</td></tr>
-                    <tr><td>ACME Auto SSL Renewal</td><td class="check">Built‑in, auto renew</td><td class="cross">Certbot Hook Script</td><td class="cross">mod_md extra</td></tr>
-                    <tr><td>Visual WebUI Manage</td><td class="check">Official Plugin</td><td class="cross">Third‑party Admin</td><td class="cross">No Official UI</td></tr>
-                    <tr><td>Plugin Develop Cost</td><td class="check">Standard Go Template</td><td class="cross">C / OpenResty Lua</td><td class="cross">C Module Complex</td></tr>
-                    <tr><td>TCP MySQL Proxy</td><td class="check">Native Read/Write Split</td><td class="cross">Compile Stream Module</td><td class="cross">Not Support</td></tr>
-                    <tr><td>One‑click Site Deploy</td><td class="check">WebUI Input 3 Params</td><td class="cross">Write Server Block</td><td class="cross">Edit VirtualHost</td></tr>
-                </tbody>
-            </table>
-        </section>
-        <section class="section fade-in">
-            <h2 class="title-md">Visual WebUI Management Plugin</h2>
-            <p class="desc">Official built‑in WebUI plugin, directly connect tnabxy kernel, no extra service, all operations visualized without editing config files manually.</p>
-            <div class="card-grid">
-                <div class="card"><h3>One‑Click Website Deploy</h3><p>Only input port, site root absolute path, php/js/file mode, create site within 3 seconds, auto generate TOML site config, hot reload take effect automatically.</p></div>
-                <div class="card"><h3>Real‑time Resource Monitor</h3><p>View CPU / Memory / Connection count / Cache hit rate, visualize resource curve, abnormal early warning.</p></div>
-                <div class="card"><h3>Access Log Trace</h3><p>Real‑time visitor IP, UA, request path, status code filter, search all historical access records.</p></div>
-                <div class="card"><h3>Plugin Visual Config</h3><p>Manage all tnabxy plugins on WebUI, such as tnabxy‑proxy: fill proxy port, account, password online, take effect one click.</p></div>
-                <div class="card"><h3>Static File Manager</h3><p>Upload/Delete/Rename site static files online, preview images/html directly in browser.</p></div>
-                <div class="card"><h3>Hot Reload Control</h3><p>One button reload config, zero connection loss, no service interruption.</p></div>
-            </div>
-        </section>
-        <section class="section fade-in">
-            <h2 class="title-md">Open Plugin Ecosystem for Developers</h2>
-            <p class="desc">Standard plugin development specification, complete template &amp; document, lower contribution threshold, build WAF / proxy / cache / custom business plugins together.</p>
-            <div class="card-grid">
-                <div class="card"><h3>Three Plugin Types</h3><p>Middleware (WAF/Security), Builtin Background Worker, External Module, cover all gateway scenarios.</p></div>
-                <div class="card"><h3>Standard MAN Spec</h3><p>Each plugin with unified TOML MAN file, auto CI check syntax, dependency limit ≤3.</p></div>
-                <div class="card"><h3>Full Dev Template</h3><p>Copy &amp; Go Go code template, builtin/middle/module two sets of complete demo, reduce repetitive code.</p></div>
-                <div class="card"><h3>Hot Update Plugin</h3><p>After develop, deploy without recompiling kernel, SIGHUP reload take effect instantly.</p></div>
-            </div>
-            <div class="section-divider"></div>
-            <a href="https://wiki.zhimoo.top/tnabxy-webserver/cha-jian-kai-fa-shou-ce-plugin-development-manual" class="btn btn-primary">Read Developer Docs</a>
-            <a href="https://wiki.zhimoo.top/tnabxy-webserver/dai-ma-shou-ce-code-manual" class="btn btn-outline">Source Code Manual</a>
-        </section>
-        <section id="download" class="section fade-in">
-            <h2 class="title-md">Download tnabxy Binary</h2>
-            <p class="desc">Single static ELF binary, Linux x86_64 / aarch64, no lib dependency, just chmod +x run.</p>
-            <div class="card">
-                <h3>v0.1.0 Stable</h3>
-                <p>11MB single file, include built-in WebUI, all core plugins enabled by default.</p>
-                <div style="margin-top:18px;">
-                    <a href="" class="btn btn-primary">Download x86_64 Linux</a>
-                    <a href="" class="btn btn-outline">Download Get Tnabxy Golang File</a>
-                </div>
-            </div>
-        </section>
-        <section id="community" class="section fade-in">
-            <h2 class="title-md">Community</h2>
-            <p class="desc">Join our open source community, discuss development &amp; deployment on official Telegram channel.</p>
-            <div class="card-grid">
-                <div class="card"><h3>Github Repository</h3><p>Source code, PR plugin submit, issue feedback bugs &amp; feature requests.</p><a href="https://github.com/zhongxion/Tnabxy-WebServer" style="margin-top:12px;display:inline-block;color:var(--primary);">Visit Repository</a></div>
-                <div class="card"><h3>Telegram Channel</h3><p>Official developer &amp; user discussion channel.</p><a href="https://t.me/zhimox" style="margin-top:12px;display:inline-block;color:var(--primary);">Join Telegram</a></div>
-                <div class="card"><h3>Plugin Marketplace</h3><p>Share self-developed WebUI / WAF / Proxy / Cache extensions.</p><a href="" style="margin-top:12px;color:var(--primary);">Browse Plugins</a></div>
-            </div>
-        </section>
-        <div class="footer-note">
-            <p>tnabxy © 2026 All Rights Reserved | Developed by Openlnk Network Studio | Official Site: <a href="https://zhimoo.top/">https://zhimoo.top/</a></p>
-        </div>
 
-    </main>
-    <aside class="sidebar-wrap" id="sidebar" aria-label="主导航">
-        <div class="sidebar-inner">
-            <div class="sidebar-logo-block">
-                <img class="logo-img" src="https://file.zhimoo.top/tnabxy.png" alt="tnabxy Logo" loading="lazy" />
-                <div class="logo-text">tnabxy</div>
-                <div class="logo-sub">Modern Edge Gateway</div>
-            </div>
-            <nav class="sidebar-nav" aria-label="导航菜单">
-                <a href="#home" class="nav-item active">Home</a>
-                <a href="#download" class="nav-item">Download</a>
-                <a href="#community" class="nav-item">Community</a>
-                <a href="https://blog.zhimoo.top/" class="nav-item">Blog</a>
-                <a href="https://wiki.zhimoo.top/tnabxy-webserver/yong-hu-shou-ce-user-manual" class="nav-item">Wiki &amp; Docs</a>
-                <a href="https://wiki.zhimoo.top/tnabxy-webserver/dai-ma-shou-ce-code-manual" class="nav-item">Code Manual</a>
-                <a href="https://wiki.zhimoo.top/tnabxy-webserver/cha-jian-kai-fa-shou-ce-plugin-development-manual" class="nav-item">Plugin Manual</a>
-                <a href="https://zhimoo.top/" class="nav-item">Author Official Site</a>
-            </nav>
-        </div>
-    </aside>
     <script>
+        // 格式：{ icon: '图标名', title: '名称', desc: '描述', url: '链接' }
+        const navData = [
+            { icon: '🤠', title: '执墨博客', desc: '执墨欲书的个人社交博客', url: 'https://blog.zhimoo.top/' },
+            { icon: '🔍', title: '执墨百科', desc: '执墨网络的官方wiki，用于解答各种知识的帮助手册', url: 'https://wiki.zhimoo.top/' },
+            { icon: '🆓', title: '公益项目', desc: '执墨的各种公益项目，欲书(执墨网络首席架构师)亲自长期维护', url: 'https://zhimoo.top/free.html' },
+            { icon: '🐳', title: '付费项目', desc: '执墨的各种闭源付费项目，提供长期维护)', url: 'https://zhimoo.top/mony.html' },,
+        ];
+
+        const navList = document.getElementById('navList');
+        const fragment = document.createDocumentFragment();
+
+        navData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'nav-item';
+            div.dataset.url = item.url;
+            div.setAttribute('role', 'link');
+            div.setAttribute('tabindex', '0');
+            div.setAttribute('aria-label', `${item.title} - ${item.desc}`);
+            div.innerHTML = `
+                <div class="icon">
+                    <span class="material-symbols-outlined" aria-hidden="true">${item.icon}</span>
+                </div>
+                <div class="info">
+                    <div class="title">${item.title}</div>
+                    <div class="desc">${item.desc}</div>
+                </div>
+                <span class="material-symbols-outlined arrow" aria-hidden="true">chevron_right</span>
+            `;
+            fragment.appendChild(div);
+        });
+
+        navList.appendChild(fragment);
+
+        navList.addEventListener('click', (e) => {
+            const card = e.target.closest('.nav-item');
+            if (card && card.dataset.url) {
+                window.open(card.dataset.url, '_blank', 'noopener,noreferrer');
+            }
+        });
+
+        navList.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const card = e.target.closest('.nav-item');
+                if (card && card.dataset.url) {
+                    window.open(card.dataset.url, '_blank', 'noopener,noreferrer');
+                }
+            }
+        });
+
+        function updateTime() {
+            const d = new Date();
+            const time = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            const date = d.getFullYear() + '.' + (d.getMonth() + 1).toString().padStart(2, '0') + '.' + d.getDate().toString().padStart(2, '0');
+            document.getElementById('time').textContent = time;
+            document.getElementById('date').textContent = date;
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
         (function() {
-            'use strict';
-            const menuBtn = document.getElementById('menuBtn');
-            const sidebar = document.getElementById('sidebar');
-            const mask = document.getElementById('mask');
-            const navItems = document.querySelectorAll('.nav-item');
-            const sections = document.querySelectorAll('section[id]');
-            const fadeEls = document.querySelectorAll('.fade-in');
-            const anchorLinks = document.querySelectorAll('a[href^="#"]');
-            function debounce(fn, delay) {
-                let timer = null;
-                return function(...args) {
-                    clearTimeout(timer);
-                    timer = setTimeout(function() {
-                        fn.apply(this, args);
-                        timer = null;
-                    }, delay);
-                };
-            }
-            function toggleSidebar() {
-                sidebar.classList.toggle('active');
-                mask.classList.toggle('active');
-                const expanded = sidebar.classList.contains('active');
-                menuBtn.setAttribute('aria-expanded', String(expanded));
+            const fontLink = document.getElementById('material-font-link');
+            if (!fontLink) return;
+            const fallbackUrl = 'https://cdn.bootcdn.net/ajax/libs/material-design-icons/4.0.0/iconfont/material-icons.css';
+
+            function checkFont() {
+                if (document.fonts && document.fonts.check('16px "Material Symbols Outlined"')) return true;
+                const testEl = document.createElement('span');
+                testEl.style.fontFamily = '"Material Symbols Outlined"';
+                testEl.style.visibility = 'hidden';
+                testEl.textContent = 'face';
+                document.body.appendChild(testEl);
+                const width = testEl.offsetWidth;
+                document.body.removeChild(testEl);
+                return width > 10;
             }
 
-            function closeSidebar() {
-                if (sidebar.classList.contains('active')) {
-                    toggleSidebar();
+            function tryFallback() {
+                if (!checkFont()) {
+                    fontLink.href = fallbackUrl;
+                    fontLink.media = 'all';
                 }
             }
-            menuBtn.addEventListener('click', toggleSidebar);
-            mask.addEventListener('click', toggleSidebar);
-            menuBtn.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleSidebar();
-                }
+
+            window.addEventListener('load', () => {
+                setTimeout(tryFallback, 3000);
             });
-            navItems.forEach(function(item) {
-                item.addEventListener('click', function() {
-                    if (window.innerWidth <= 1024) {
-                        closeSidebar();
-                    }
-                });
-            });
-            anchorLinks.forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const targetId = link.getAttribute('href');
-                    if (targetId && targetId !== '#') {
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            e.preventDefault();
-                            target.scrollIntoView({ behavior: 'smooth' });
-                            history.pushState(null, '', targetId);
-                        }
-                    }
-                });
-            });
-            function updateActiveNav() {
-                const scrollY = window.scrollY;
-                let activeId = null;
-
-                sections.forEach(function(sec) {
-                    const top = sec.offsetTop - 100;
-                    const height = sec.offsetHeight;
-                    const id = sec.getAttribute('id');
-                    if (scrollY >= top && scrollY < top + height) {
-                        activeId = id;
-                    }
-                });
-
-                navItems.forEach(function(item) {
-                    const href = item.getAttribute('href');
-                    const isMatch = (href === '#' + activeId);
-                    item.classList.toggle('active', isMatch);
-                });
-            }
-
-            const debouncedUpdateNav = debounce(updateActiveNav, 80);
-            window.addEventListener('scroll', debouncedUpdateNav, { passive: true });
-            window.addEventListener('load', function() {
-                updateActiveNav();
-            });
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('show');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                fadeEls.forEach(function(el) {
-                    observer.observe(el);
-                });
-            } else {
-                fadeEls.forEach(function(el) {
-                    el.classList.add('show');
-                });
-            }
-            let resizeTimer = null;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    if (window.innerWidth > 1024 && sidebar.classList.contains('active')) {
-                        closeSidebar();
-                    }
-                }, 200);
-            }, { passive: true });
-
         })();
     </script>
-
 </body>
 </html>
